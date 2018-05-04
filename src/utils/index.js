@@ -4,6 +4,7 @@ function formatNumber (n) {
 }
 
 export function formatTime (date) {
+  date = new Date(date)
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
@@ -21,10 +22,11 @@ export function formatTime (date) {
 export function formatNews(news){
   const {newsid, title, postdate, commentcount, lapinid, image} = news
   const url = `/pages/news/detail?id=${newsid}&title=${title}`
+  const date =  formatTime(postdate)
   return {
     id: newsid,
     title,
-    postdate: formatTime(postdate),
+    postdate: date,
     commentcount,
     lapinid,
     image,
