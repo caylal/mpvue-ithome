@@ -23,13 +23,13 @@ export default {
       navigationBarTitleText: 'iThome',
       navigationBarTextStyle: 'black'
     },
-    tarBar: {
+    tabBar: {
       color: '#999',
       selectedColor: '#d22222',
       backgroundColor: '#fff',
       borderStyle: 'black',
       list: [{
-        pagePath: 'pages/news/main',
+        pagePath: 'pages/index/main',
         text: '资讯',
         iconPath: 'static/assets/news.png',
         selectedIconPath: 'static/assets/news-active.png'
