@@ -1,5 +1,5 @@
 <template>
-  <div class="news-item"  @click="detail" v-if="!news.lapinid">
+  <div class="news-item"  @click="detail(news)" v-if="!news.lapinid">
       <img :src="news.image" alt="" class="news-image">
       <div class="news-content">
         <span class="news-title">{{news.title}}</span>
@@ -20,9 +20,11 @@ export default {
         }
     },
     methods:{
-        detail(){
-            const {url} = this.news
-            this.$router.push(url)
+        detail(obj){
+            // wx.navigateTo({
+            //     url: obj.url
+            // })
+            this.$router.push(obj.url)
         }
     }
 }
@@ -48,11 +50,11 @@ export default {
     margin: 0 5px;   
 }
 .news-title{
-    font-size: .28rem;
+    font-size: .30rem;
 }
 .news-info{
     color: #aaa;
-    font-size: .25rem;
+    font-size: .26rem;
     display: flex;
     justify-content: space-between;
     margin-right: 5px;

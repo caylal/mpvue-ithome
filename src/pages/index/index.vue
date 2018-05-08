@@ -34,8 +34,10 @@ export default {
     this.getlist()
   },
   onPullDownRefresh(){
+    console.log("下拉刷新")
+    wx.showNavigationBarLoading()
     this.getlist()
-  },
+  }, 
   methods: {
     ...mapActions([
       'getSlides',
@@ -47,6 +49,7 @@ export default {
         this.getNews(true)
       ])
       wx.stopPullDownRefresh()
+      wx.hideNavigationBarLoading()     
     }
   }
 }

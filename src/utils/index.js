@@ -21,7 +21,7 @@ export function formatTime (date) {
 
 export function formatNews(news){
   const {newsid, title, postdate, commentcount, lapinid, image} = news
-  const url = `/pages/news/detail?id=${newsid}&title=${title}`
+  const url = `/pages/detail/main?id=${newsid}&title=${title}`
   const date =  formatTime(postdate)
   return {
     id: newsid,
@@ -38,11 +38,29 @@ export function formatSlide(slide){
   const title = slide.title["#text"]
   const image = slide.image["#text"]
   const link = slide.link["#text"]
-  const url = `/pages/news/detail?id=${link}&title=${title}`
+  const url = `/pages/detail/main?id=${link}&title=${title}`
   return {
     title,
     image,
     url
+  }
+}
+
+export function formatTopics(topic){
+  const { id, c, cn, t, vc, rc, rt, un, uid } = topic
+  const headpath = `00${String(uid).padStart(7, '0').replace(/\B([0-9]{2})/g, '/$1')}_60.jpg`
+  return {
+    id,
+    title: t,
+    tag: c,
+    type: cn,
+    author: {
+      nickname: un,
+      headimg: `https://avatar.ithome.com/avatars/${headpath}`
+    },
+    viewcount: vc,
+    replycount: rc,
+    replytime: rt
   }
 }
 

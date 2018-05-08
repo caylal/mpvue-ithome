@@ -3,7 +3,7 @@ const baseUrlApi = 'https://api.ithome.com'
 const baseUrlDyn = 'https://dyn.ithome.com'
 const badeUrlQuan = 'https://apiquan.ithome.com'
 
-const request = (url, data = {}, type = 'api', methods = 'POST') => new Promise((resolve, reject) => {
+export const request = (url, data = {}, type = 'api', methods = 'POST') => new Promise((resolve, reject) => {
     switch(type){
         case 'dyn': url = baseUrlDyn + url
         break
@@ -21,5 +21,12 @@ const request = (url, data = {}, type = 'api', methods = 'POST') => new Promise(
         fail: res => reject(res)
     })
 })
+export const api = {
+    getNews: (id) => request(`/xml/newscontent/${id}.xml`),
 
-export default request
+    getRelateNews: (id) => request(`/json/tags/0${id.slice(0, 3)}/${id}.json`),
+
+    getTopic: (id) => request(`/api/post/${id}`,{},'quan')
+}
+
+

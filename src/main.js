@@ -20,8 +20,10 @@ export default {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
+      backgroundColorTop: '#d22222',
       navigationBarTitleText: 'iThome',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'black',
+      enablePullDownRefresh: true
     },
     tabBar: {
       color: '#999',
