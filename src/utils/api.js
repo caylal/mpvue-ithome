@@ -26,7 +26,9 @@ export const api = {
 
     getRelateNews: (id) => request(`/json/tags/0${id.slice(0, 3)}/${id}.json`),
 
-    getTopic: (id) => request(`/api/post/${id}`,{},'quan')
+    getTopic: (id) => request(`/api/post/${id}`,{},'quan'),
+
+    getTopicComment: (id, lastid, data) => request('/api/reply', data, 'quan')
 }
 
 

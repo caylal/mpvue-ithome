@@ -16,14 +16,19 @@
           <div v-html="item.content"></div>
       </div>
       <div class="comment">
-
+          <comment-item v-for="(item, index) in item.reply" :key="index" :item="item"></comment-item>
       </div>
   </div>
 </template>
 
 <script>
 import {api} from '../../utils/api'
+import { formatComments } from '@/utils'
+import CommentItem from '../../components/CommentItem'
 export default {
+    components:{
+        CommentItem
+    },
     data() {
         return {
             item: {}
@@ -32,29 +37,36 @@ export default {
     mounted(){
         this.getTopic()
     },
+    nReachBottom () {
+        this.getComments()
+    },
     methods: {
         async getTopic (){
-            const {query} = this.$route
+            const query = this.$route.query
             const topic = await api.getTopic(query.id)
             console.log("topic-comment:" + JSON.stringify(topic))
             if(!topic) return 
             topic.content = topic.content.replace('!--IMG_1--', `img src="${topic.imgs[0]}" width="100%" /`)
-            topic.reply = topic.reply.map(item => {
-                 return {
-                    id: item.M.Ci,
-                    author: item.M.N,
-                    phone: item.M.Ta,
-                    floor: item.M.SF || `${item.F}楼`,
-                    content: item.M.C.replace(/<img/g, '<img width="100%"')
-                }
-            })
+            topic.reply = topic.reply.map(formatComments)
             this.item = Object.assign({
                 title: query.title,
                 vc: query.vc
             }, topic)
         },
         async getComment(){
-            
+            const query = this.$route.query
+            const comment = this.topic.reply
+            const lastComment = comment[comment.length - 1]
+            const data = {
+                postid: id,
+                replyidlessthan: lastComment
+            }
+            const newComment = await api.getTopicComment(query.id, lastComment.id, data)
+            console.log("comment-list:" + JSON.stringify(newComment))
+            if(!newComment) return
+
+            const formatedComments = newComment.map(formatComments)
+            this.topic.reply = this.topic.reply.concat(formatedComments)            
         }
 
         

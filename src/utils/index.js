@@ -64,3 +64,13 @@ export function formatTopics(topic){
   }
 }
 
+export function formatComments(comment){  
+  return {
+    id: comment.M.Ci,
+    author: comment.M.N,
+    phone: comment.M.Ta,
+    floor: comment.M.SF || `${comment.F}楼`,
+    content: comment.M.C.replace(/<img/g, '<img width="100%"')
+}
+}
+
