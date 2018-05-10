@@ -28,7 +28,7 @@ export const api = {
 
     getTopic: (id) => request(`/api/post/${id}`,{},'quan'),
 
-    getTopicComment: (id, lastid, data) => request('/api/reply', data, 'quan')
+    getTopicComment: (data) => request('/api/reply', data, 'quan')
 }
 
 

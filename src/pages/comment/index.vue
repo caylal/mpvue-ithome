@@ -31,14 +31,18 @@ export default {
     },
     data() {
         return {
-            item: {}
+            item: {},            
         }        
     },
     mounted(){
         this.getTopic()
     },
-    nReachBottom () {
-        this.getComments()
+    onReachBottom () {
+        console.log("下拉刷新")       
+        wx.showLoading({
+            title: '玩命加载中'
+        })
+        this.getComment()
     },
     methods: {
         async getTopic (){
@@ -53,20 +57,23 @@ export default {
                 vc: query.vc
             }, topic)
         },
-        async getComment(){
-            const query = this.$route.query
-            const comment = this.topic.reply
-            const lastComment = comment[comment.length - 1]
-            const data = {
-                postid: id,
-                replyidlessthan: lastComment
-            }
-            const newComment = await api.getTopicComment(query.id, lastComment.id, data)
+        async getComment(){           
+            const { query } = this.$route
+            console.log("getCquery" + JSON.stringify(query) )
+            const comment = this.item.reply
+             console.log("getComment" + comment)
+            const lastComment = comment[comment.length - 1]           
+            const newComment = await api.getTopicComment({
+                postid: query.id,
+                replyidlessthan: lastComment.id,
+            })
             console.log("comment-list:" + JSON.stringify(newComment))
-            if(!newComment) return
+            if(newComment.length < 0) return
 
             const formatedComments = newComment.map(formatComments)
-            this.topic.reply = this.topic.reply.concat(formatedComments)            
+            this.item.reply = this.item.reply.concat(formatedComments)         
+            wx.stopPullDownRefresh()      
+            wx.hideLoading()          
         }
 
         
